@@ -13,7 +13,7 @@ $contee = new Contee\Contee(new Contee\Auth\ApiAuth("app_id", "client_id", "clie
 ```
 
 ## Accessing API route
-Api routes are currently allowed from **Pro plan**. Sdk has method for accessing them. When the route has an option you can pass the parameter in options array and it will be automatically replaced. Every api call returns `Contee\Response\Response` object, which has many types of getting the content back.
+Api routes are currently allowed from **Pro plan**. Sdk has method for accessing them. When the route has an option you can pass the parameter in options array and it will be automatically replaced. Every api call returns `Contee\Response\Response` object, which has methods to get content back as raw output, json string, array or object.
 
 ```
 $contee->get("/site/visits/:option, array(":option"=>"perpage"))->toObject();
