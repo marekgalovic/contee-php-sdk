@@ -6,6 +6,7 @@ class Request implements \Contee\Interfaces\RequestInterface
 {
 	private $requestConfig = array(
 		"url" => "http://api.conteeapp.com",
+		"timeout" => 20,
 		"returnTransfer" => true,
 		"headers" => array(
 			"Content-Type: application/json",
@@ -154,6 +155,7 @@ class Request implements \Contee\Interfaces\RequestInterface
 			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->getDataJson());
 		}
 		curl_setopt($this->ch, CURLOPT_FAILONERROR, false);
+		curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->getConfigField("timeout"));
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, $this->getConfigField("returnTransfer"));
 		curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->getHeaders());
 		return $this->exec();

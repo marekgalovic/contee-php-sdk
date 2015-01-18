@@ -4,16 +4,16 @@ namespace Contee;
 
 class Item implements \Contee\Interfaces\ItemInterface
 {
-	private $tags;
+	private $tags = array();
 	
 	private $data = array();
 	
 	public function setTags($tags)
 	{
 		if(!is_array($tags)){
-			$tags = array($tags);
+			array_push($this->tags, strval($tags));
 		}
-		$this->tags = $tags;
+		$this->tags = array_merge($this->tags, $tags);
 	}
 	
 	public function setData($data)
@@ -27,6 +27,6 @@ class Item implements \Contee\Interfaces\ItemInterface
 	public function get()
 	{
 		$this->data["tags"] = $this->tags;
-		return $this->data;
+		return (object) $this->data;
 	}
 }

@@ -50,7 +50,12 @@ class Contee implements \Contee\Interfaces\SdkInterface{
 	public function getMatched(\Contee\Interfaces\MatchedInterface $matched)
 	{
 		$option = $matched->isGeneral() ? "general" : "resource";
-		return $this->request->post("/matched/".$option, $matched->toArray())->make();
+		$response = $this->request->post("/matched/".$option, $matched->toArray())->make();
+		if(!$response->toJson())
+		{
+			$response = new \Contee\Response\Response($matched->toJson());
+		}
+		return $response;
 	}
 	
 }
