@@ -43,7 +43,7 @@ $newsletter = $contee->createNewsletter();
 
 $item = $contee->createItem();
 $item->setTags(array("tag1", "tag2", "tag3")); //required item to correctly matching
-$item->setData(array("name"=>"FOO")); //whatever data you want to get back and display
+$item->setData(array("name"=>"FOO")); //you can access this data in email template.
 
 $message = $contee->createMessage();
 $message->setCustom(array("message" => "Hi there."));
