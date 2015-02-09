@@ -49,6 +49,9 @@ class Contee implements \Contee\Interfaces\SdkInterface{
 	//matched 
 	public function getMatched(\Contee\Interfaces\MatchedInterface $matched)
 	{
+		if($matched->isFlushed()){
+			$this->request->post("/matched/flush", $matched->toArray())->make();
+		}
 		$option = $matched->isGeneral() ? "general" : "resource";
 		$response = $this->request->post("/matched/".$option, $matched->toArray())->make();
 		if(!$response->toJson())

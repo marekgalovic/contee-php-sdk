@@ -7,6 +7,8 @@ class Matched implements \Contee\Interfaces\MatchedInterface
 
 	private $request = array("items" => array(), "resource"=>"");
 	
+	private $flushed = false;
+	
 	public function __construct()
 	{
 		$this->checkCookie();
@@ -30,8 +32,18 @@ class Matched implements \Contee\Interfaces\MatchedInterface
 	private function checkCookie()
 	{
 		if(empty($this->request["resource"])){
-			$this->request["resource"] = $_COOKIE["_statz_tracker"] ? $_COOKIE["_statz_tracker"] : "";
+			$this->request["resource"] = isset($_COOKIE["_statz_tracker"]) ? $_COOKIE["_statz_tracker"] : "";
 		}
+	}
+	
+	public function flush()
+	{
+		$this->flushed = true;
+	}
+	
+	public function isFlushed()
+	{
+		return $this->flushed;
 	}
 	
 	public function isGeneral()
