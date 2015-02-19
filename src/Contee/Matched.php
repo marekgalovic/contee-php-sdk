@@ -19,9 +19,24 @@ class Matched implements \Contee\Interfaces\MatchedInterface
 		$this->request["type"] = strval($type);
 	}
 	
+	public function getType()
+	{
+		return $this->request["type"];
+	}
+	
 	public function setResource($resource = "")
 	{	
 		$this->request["resource"] = strval($resource);
+	}
+	
+	public function getResource()
+	{
+		return $this->request["resource"];
+	}
+	
+	public function getInfo()
+	{
+		return strval($this->isGeneral)."-".$this->getType()."-".$this->getResource();
 	}
 	
 	public function setItem(\Contee\Interfaces\ItemInterface $item)
@@ -39,6 +54,7 @@ class Matched implements \Contee\Interfaces\MatchedInterface
 	public function flush()
 	{
 		$this->flushed = true;
+		return $this;
 	}
 	
 	public function isFlushed()

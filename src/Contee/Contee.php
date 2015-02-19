@@ -5,10 +5,12 @@ namespace Contee;
 class Contee implements \Contee\Interfaces\SdkInterface{
 
 	private $request;
+	private $cache;
 	
 	public function __construct(\Contee\Interfaces\AuthInterface $auth)
 	{	
 		$this->request = new \Contee\Request\Request($auth);
+		$this->cache = \Contee\Cache\Cache::instance();
 	}
 	
 	//creators
@@ -53,12 +55,17 @@ class Contee implements \Contee\Interfaces\SdkInterface{
 			$this->request->post("/matched/flush", $matched->toArray())->make();
 		}
 		$option = $matched->isGeneral() ? "general" : "resource";
-		$response = $this->request->post("/matched/".$option, $matched->toArray())->make();
-		if(!$response->toJson())
-		{
-			$response = new \Contee\Response\Response($matched->toJson());
+		if($this->cache->has($matched->getInfo())){
+			return new \Contee\Response\Response($this->cache->get($matched->getInfo()));
+		}else{
+			$response = $this->request->post("/matched/".$option, $matched->toArray())->make();
+			if(!$response->toJson())
+			{
+				$response = new \Contee\Response\Response($matched->toJson());
+			}
+			$this->cache->setex($matched->getInfo(), 3600, $response->toJson());
+			return $response;
 		}
-		return $response;
 	}
 	
 }
