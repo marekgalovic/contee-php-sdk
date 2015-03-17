@@ -47,7 +47,7 @@ class Matched implements \Contee\Interfaces\MatchedInterface
 	private function checkCookie()
 	{
 		if(empty($this->request["resource"])){
-			$this->request["resource"] = isset($_COOKIE["_statz_tracker"]) ? $_COOKIE["_statz_tracker"] : "";
+			$this->request["resource"] = isset($_COOKIE["_contee"]) ? $_COOKIE["_contee"] : "";
 		}
 	}
 	
